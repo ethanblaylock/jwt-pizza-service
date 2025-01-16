@@ -47,6 +47,10 @@ test('logout', async () => {
     expect(logoutRes.status).toBe(200);
 })
 
+test('update user', async () => {
+
+})
+
 function expectValidJwt(potentialJwt) {
   expect(potentialJwt).toMatch(/^[a-zA-Z0-9\-_]*\.[a-zA-Z0-9\-_]*\.[a-zA-Z0-9\-_]*$/);
 }
