@@ -2,6 +2,7 @@ const request = require('supertest');
 const app = require('../service');
 
 const testUser = { name: 'pizza diner', email: 'reg@test.com', password: 'a' };
+const badTestUser = { name: 'pizza diner', email: 'reg@test.com'};
 let testUserAuthToken;
 
 if (process.env.VSCODE_INSPECTOR_OPTIONS) {
@@ -32,7 +33,9 @@ test('register', async () => {
     const expectedUser = { ...testUser, roles: [{ role: 'diner' }] };
     delete expectedUser.password;
     expect(registerRes.body.user).toMatchObject(expectedUser);
+})
 
+test('register bad req', async () => {
 })
 
 function expectValidJwt(potentialJwt) {
