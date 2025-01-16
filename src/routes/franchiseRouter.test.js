@@ -32,10 +32,24 @@ test('get franchises', async () => {
     expect(getFranchisesRes.status).toBe(200);
 })
 
+test('get franchises as admin', async () => {
+    const getFranchisesRes = await request(app)
+      .get('/api/franchise').set('Authorization', `Bearer ${adminToken}`);
+    expect(getFranchisesRes.status).toBe(200);
+})
+
 test('get franchises by user', async () => {
     const getFranchisesByUserRes = await request(app)
       .get(`/api/franchise/${franchiseeUser.body.admins[0].id}`).set('Authorization', `Bearer ${adminToken}`);
     expect(getFranchisesByUserRes.status).toBe(200);
+})
+
+test('get franchises by user when none exist', async () => {
+  await request(app)
+  .delete(`/api/franchise/${franchiseeUser.body.id}`).set('Authorization', `Bearer ${adminToken}`);
+  const getFranchisesByUserRes = await request(app)
+  .get(`/api/franchise/${franchiseeUser.body.admins[0].id}`).set('Authorization', `Bearer ${adminToken}`);
+  expect(getFranchisesByUserRes.status).toBe(200);
 })
 
 test('create franchise not admin', async () => {
@@ -60,6 +74,12 @@ test('delete franchise not admin', async () => {
     const deleteFranchiseRes = await request(app)
       .delete(`/api/franchise/${franchiseeUser.body.id}`).set('Authorization', `Bearer ${registerRes.body.token}`);
     expect(deleteFranchiseRes.status).toBe(403);
+})
+
+test('delete franchise bad id', async () => {
+  const deleteFranchiseRes = await request(app)
+      .delete(`/api/franchise/${0}`).set('Authorization', `Bearer ${adminToken}`);
+    expect(deleteFranchiseRes.status).toBe(200);
 })
 
 test('create store', async () => {
@@ -98,6 +118,12 @@ test('add franchise user to DB', async () => {
   user = await DB.addUser(user);
   expect(user).toBeDefined();
 })
+
+test('logout bad auth', async () => {
+  const logoutRes = await request(app).delete('/api/auth').set('Authorization', `Bearer ${'badtoken'}`);
+  expect(logoutRes.status).toBe(401);
+})
+
 
 function randomName() {
   return Math.random().toString(36).substring(2, 12);
