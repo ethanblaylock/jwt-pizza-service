@@ -41,6 +41,12 @@ test('add menu item not admin', async () => {
     expect(addMenuItemRes.status).toBe(403);
 })
 
+test('get orders', async () => {
+    const getOrdersRes = await request(app)
+      .get('/api/order').set('Authorization', `Bearer ${adminToken}`);
+    expect(getOrdersRes.status).toBe(200);
+})
+
 function randomName() {
   return Math.random().toString(36).substring(2, 12);
 }
