@@ -36,6 +36,8 @@ test('register', async () => {
 })
 
 test('register bad req', async () => {
+    const registerRes = await request(app).post('/api/auth').send(badTestUser);
+    expect(registerRes.status).toBe(400);
 })
 
 function expectValidJwt(potentialJwt) {
