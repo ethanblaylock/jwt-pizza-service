@@ -36,6 +36,9 @@ test('add menu item', async () => {
 })
 
 test('add menu item not admin', async () => {
+    const addMenuItemRes = await request(app)
+      .put('/api/order/menu').set('Authorization', `Bearer ${registerRes.body.token}`).send({ title: randomName() , description: 'Veggie', image: '', price: 0.05 });
+    expect(addMenuItemRes.status).toBe(403);
 })
 
 function randomName() {
