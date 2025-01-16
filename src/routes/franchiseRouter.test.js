@@ -63,7 +63,9 @@ test('create store', async () => {
 })
 
 test('create store not admin', async () => {
-
+    const createStoreRes = await request(app)
+      .post(`/api/franchise/${franchiseeUser.body.id}/store`).set('Authorization', `Bearer ${registerRes2.body.token}`).send({ franchiseId: -1 , name: randomName() });
+    expect(createStoreRes.status).toBe(403);
 })
 
 
