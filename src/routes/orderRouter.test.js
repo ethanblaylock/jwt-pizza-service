@@ -35,6 +35,8 @@ test('add menu item', async () => {
     expect(addMenuItemRes.status).toBe(200);
 })
 
+test('add menu item not admin', async () => {
+})
 
 function randomName() {
   return Math.random().toString(36).substring(2, 12);
