@@ -76,6 +76,9 @@ test('delete store', async () => {
     expect(deleteStoreRes.status).toBe(200);
 })
 
+test('delete store not admin', async () => {
+})
+
 function randomName() {
   return Math.random().toString(36).substring(2, 12);
 }
