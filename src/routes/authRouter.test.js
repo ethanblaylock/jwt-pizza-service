@@ -4,6 +4,7 @@ const app = require('../service');
 
 const testUser = { name: 'pizza diner', email: 'reg@test.com', password: 'a' };
 const badTestUser = { name: 'pizza diner', email: 'reg@test.com'};
+const nonExistentUser = { name: 'pizza diner', email: 'nope', password: 'b' };
 let testUserAuthToken;
 let testUserId;
 
@@ -55,6 +56,11 @@ test('update user', async () => {
         .send({ email: `${testUser.email}`,password: 'updatedpassword'});
     expect(updateUserRes.status).toBe(200);
 
+})
+
+test('phony user', async () => {
+    const phonyUserRes = await request(app).put('/api/auth').send(nonExistentUser);
+    expect(phonyUserRes.status).toBe(404);
 })
 
 

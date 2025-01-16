@@ -93,14 +93,7 @@ class DB {
       
       return this.getUser(email, password);
     } finally {
-      console.log('connection end');
-      try {
       connection.end();
-      } catch (endError) {
-        console.log('connection end error');
-        console.log(endError);
-      }
-      console.log('connection did ended');
     }
   }
 

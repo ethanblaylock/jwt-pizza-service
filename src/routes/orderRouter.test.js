@@ -38,6 +38,8 @@ test('add menu item not admin', async () => {
 })
 
 test('get orders', async () => {
+  const createOrderRes = await request(app)
+      .post('/api/order').set('Authorization', `Bearer ${registerRes.body.token}`).send({ franchiseId: 1, storeId: 1, items: [{ menuId: 1, description: 'Veggie', price: 0.05 }]});
     const getOrdersRes = await request(app)
       .get('/api/order').set('Authorization', `Bearer ${adminToken}`);
     expect(getOrdersRes.status).toBe(200);

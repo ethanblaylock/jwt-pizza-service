@@ -44,6 +44,12 @@ test('create franchise not admin', async () => {
   expect(createFranchiseRes.status).toBe(403);
 })
 
+test('create franchise bad email', async () => {
+    const createFranchiseRes =  await request(app)
+    .post('/api/franchise').set('Authorization', `Bearer ${adminToken}`).send({ name: randomName(), admins: [{ email: 'fakeemail' }]});
+    expect(createFranchiseRes.status).toBe(404);
+})
+
 test('delete franchise', async () => {
     const deleteFranchiseRes = await request(app)
       .delete(`/api/franchise/${franchiseeUser.body.id}`).set('Authorization', `Bearer ${adminToken}`);
@@ -82,6 +88,15 @@ test('delete store not admin', async () => {
     const deleteStoreRes = await request(app)
       .delete(`/api/franchise/${franchiseeUser.body.id}/store/${createStoreRes.body.id}`).set('Authorization', `Bearer ${registerRes2.body.token}`);
     expect(deleteStoreRes.status).toBe(403);
+})
+
+test('add franchise user to DB', async () => {
+  let user = { password: 'toomanysecrets', roles: [{ role: Role.Franchisee, object: 1}] };
+  user.name = randomName();
+  user.email = user.name + '@admin.com';
+
+  user = await DB.addUser(user);
+  expect(user).toBeDefined();
 })
 
 function randomName() {
