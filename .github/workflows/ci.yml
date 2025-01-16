@@ -39,7 +39,7 @@ jobs:
 
       - name: Lint
         run: npm run lint
-        
+
       - name: Write config file
         run: |
           echo "module.exports = {
@@ -59,7 +59,7 @@ jobs:
               apiKey: '${{ secrets.FACTORY_API_KEY }}',
             },
           };" > src/config.js
-          
+
       - name: Tests
         run: npm test
 
@@ -80,4 +80,3 @@ jobs:
           git add .
           git commit -m "generated"
           git push
-
