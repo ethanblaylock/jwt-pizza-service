@@ -2,17 +2,22 @@ const request = require('supertest');
 const app = require('../service');
 
 const testUser = { name: 'pizza diner', email: 'reg@test.com', password: 'a' };
+const secondTestUser = { name: 'pizza diner 2 ', email: '2@test.com', password: 'a' };
+
 let franchiseeUser;
 let adminToken;
-let resgisterRes;
+let registerRes;
+let registerRes2;
 
 if (process.env.VSCODE_INSPECTOR_OPTIONS) {
     jest.setTimeout(60 * 1000 * 5); // 5 minutes
   }
 
-beforeAll(async () => {
+beforeEach(async () => {
     testUser.email = Math.random().toString(36).substring(2, 12) + '@test.com';
     registerRes = await request(app).post('/api/auth').send(testUser);
+    secondTestUser.email = Math.random().toString(36).substring(2, 12) + '@test.com';
+    registerRes2 = await request(app).post('/api/auth').send(secondTestUser);
     const adminUser = await createAdminUser();
     const loginAdminRes = await request(app).put('/api/auth').send({ email: adminUser.email, password: adminUser.password });
     adminToken = loginAdminRes.body.token;
@@ -50,6 +55,18 @@ test('delete franchise not admin', async () => {
       .delete(`/api/franchise/${franchiseeUser.body.id}`).set('Authorization', `Bearer ${registerRes.body.token}`);
     expect(deleteFranchiseRes.status).toBe(403);
 })
+
+test('create store', async () => {
+    const createStoreRes = await request(app)
+      .post(`/api/franchise/${franchiseeUser.body.id}/store`).set('Authorization', `Bearer ${registerRes.body.token}`).send({ franchiseId: franchiseeUser.body.id , name: randomName() });
+    expect(createStoreRes.status).toBe(200);
+})
+
+test('create store not admin', async () => {
+
+})
+
+
 
 function randomName() {
   return Math.random().toString(36).substring(2, 12);
