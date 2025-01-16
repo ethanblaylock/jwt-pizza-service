@@ -26,6 +26,8 @@ test('login', async () => {
 });
 
 test('register', async () => {
+    const resisterRes = await request(app).post('/api/auth').send(testUser);
+    expect(resisterRes.status).toBe(200);
 })
 
 function expectValidJwt(potentialJwt) {
