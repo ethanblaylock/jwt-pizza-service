@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../service');
 
+
 const testUser = { name: 'pizza diner', email: 'reg@test.com', password: 'a' };
 const badTestUser = { name: 'pizza diner', email: 'reg@test.com'};
 let testUserAuthToken;
@@ -38,6 +39,10 @@ test('register', async () => {
 test('register bad req', async () => {
     const registerRes = await request(app).post('/api/auth').send(badTestUser);
     expect(registerRes.status).toBe(400);
+})
+
+test('logout', async () => {
+
 })
 
 function expectValidJwt(potentialJwt) {
