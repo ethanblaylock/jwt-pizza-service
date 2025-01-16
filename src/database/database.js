@@ -90,9 +90,17 @@ class DB {
         const query = `UPDATE user SET ${params.join(', ')} WHERE id=${userId}`;
         await this.query(connection, query);
       }
+      
       return this.getUser(email, password);
     } finally {
+      console.log('connection end');
+      try {
       connection.end();
+      } catch (endError) {
+        console.log('connection end error');
+        console.log(endError);
+      }
+      console.log('connection did ended');
     }
   }
 

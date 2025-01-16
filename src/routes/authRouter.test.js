@@ -10,10 +10,11 @@ if (process.env.VSCODE_INSPECTOR_OPTIONS) {
   jest.setTimeout(60 * 1000 * 5); // 5 minutes
 }
 
-beforeAll(async () => {
+beforeEach(async () => {
   testUser.email = Math.random().toString(36).substring(2, 12) + '@test.com';
   const registerRes = await request(app).post('/api/auth').send(testUser);
   testUserAuthToken = registerRes.body.token;
+  testUserId = registerRes.body.user.id;
   expectValidJwt(testUserAuthToken);
 });
 
@@ -42,12 +43,16 @@ test('register bad req', async () => {
 })
 
 test('logout', async () => {
-
     const logoutRes = await request(app).delete('/api/auth').set('Authorization', `Bearer ${testUserAuthToken}`);
     expect(logoutRes.status).toBe(200);
 })
 
 test('update user', async () => {
+    const updateUserRes = await request(app)
+        .put(`/api/auth/${testUserId}`)
+        .set('Authorization', `Bearer ${testUserAuthToken}`)
+        .send({ email: `${testUser.email}`,password: 'updatedpassword'});
+    expect(updateUserRes.status).toBe(200);
 
 })
 

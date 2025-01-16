@@ -103,6 +103,7 @@ authRouter.put(
   '/:userId',
   authRouter.authenticateToken,
   asyncHandler(async (req, res) => {
+    console.log(req.body);
     const { email, password } = req.body;
     const userId = Number(req.params.userId);
     const user = req.user;
@@ -111,6 +112,7 @@ authRouter.put(
     }
 
     const updatedUser = await DB.updateUser(userId, email, password);
+    console.log(updatedUser);
     res.json(updatedUser);
   })
 );
