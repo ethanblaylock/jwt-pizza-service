@@ -46,7 +46,9 @@ test('delete franchise', async () => {
 })
 
 test('delete franchise not admin', async () => {
-
+    const deleteFranchiseRes = await request(app)
+      .delete(`/api/franchise/${franchiseeUser.body.id}`).set('Authorization', `Bearer ${registerRes.body.token}`);
+    expect(deleteFranchiseRes.status).toBe(403);
 })
 
 function randomName() {
