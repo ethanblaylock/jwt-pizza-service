@@ -26,8 +26,13 @@ test('login', async () => {
 });
 
 test('register', async () => {
-    const resisterRes = await request(app).post('/api/auth').send(testUser);
-    expect(resisterRes.status).toBe(200);
+    const registerRes = await request(app).post('/api/auth').send(testUser);
+    expect(registerRes.status).toBe(200);
+
+    const expectedUser = { ...testUser, roles: [{ role: 'diner' }] };
+    delete expectedUser.password;
+    expect(registerRes.body.user).toMatchObject(expectedUser);
+
 })
 
 function expectValidJwt(potentialJwt) {
