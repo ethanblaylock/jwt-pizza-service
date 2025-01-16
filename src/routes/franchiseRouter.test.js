@@ -68,7 +68,8 @@ test('create store not admin', async () => {
     expect(createStoreRes.status).toBe(403);
 })
 
-
+test('delete store', async () => {
+})
 
 function randomName() {
   return Math.random().toString(36).substring(2, 12);
