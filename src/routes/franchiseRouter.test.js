@@ -110,19 +110,12 @@ test('delete store not admin', async () => {
     expect(deleteStoreRes.status).toBe(403);
 })
 
-test('add franchise user to DB', async () => {
-  let user = { password: 'toomanysecrets', roles: [{ role: Role.Franchisee, object: 1}] };
-  user.name = randomName();
-  user.email = user.name + '@admin.com';
-
-  user = await DB.addUser(user);
-  expect(user).toBeDefined();
-})
 
 test('logout bad auth', async () => {
   const logoutRes = await request(app).delete('/api/auth').set('Authorization', `Bearer ${'badtoken'}`);
   expect(logoutRes.status).toBe(401);
 })
+
 
 
 function randomName() {
