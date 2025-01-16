@@ -40,6 +40,9 @@ test('create franchise not admin', async () => {
 })
 
 test('delete franchise', async () => {
+    const deleteFranchiseRes = await request(app)
+      .delete(`/api/franchise/${franchiseeUser.body.id}`).set('Authorization', `Bearer ${adminToken}`);
+    expect(deleteFranchiseRes.status).toBe(200);
 })
 
 function randomName() {
