@@ -69,6 +69,11 @@ test('create store not admin', async () => {
 })
 
 test('delete store', async () => {
+    const createStoreRes = await request(app)
+      .post(`/api/franchise/${franchiseeUser.body.id}/store`).set('Authorization', `Bearer ${registerRes.body.token}`).send({ franchiseId: franchiseeUser.body.id , name: randomName() });
+    const deleteStoreRes = await request(app)
+      .delete(`/api/franchise/${franchiseeUser.body.id}/store/${createStoreRes.body.id}`).set('Authorization', `Bearer ${registerRes.body.token}`);
+    expect(deleteStoreRes.status).toBe(200);
 })
 
 function randomName() {
