@@ -43,6 +43,8 @@ test('register bad req', async () => {
 
 test('logout', async () => {
 
+    const logoutRes = await request(app).delete('/api/auth').set('Authorization', `Bearer ${testUserAuthToken}`);
+    expect(logoutRes.status).toBe(200);
 })
 
 function expectValidJwt(potentialJwt) {
