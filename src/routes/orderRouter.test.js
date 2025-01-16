@@ -47,6 +47,12 @@ test('get orders', async () => {
     expect(getOrdersRes.status).toBe(200);
 })
 
+test('create order', async () => {
+    const createOrderRes = await request(app)
+      .post('/api/order').set('Authorization', `Bearer ${registerRes.body.token}`).send({ franchiseId: 1, storeId: 1, items: [{ menuId: 1, description: 'Veggie', price: 0.05 }]});
+    expect(createOrderRes.status).toBe(200);
+})
+
 function randomName() {
   return Math.random().toString(36).substring(2, 12);
 }
