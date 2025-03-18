@@ -1,5 +1,6 @@
+const { get } = require('https');
 const config = require('./config.json');
-
+get();
 const requests = {};
 
 function track(req, res, next) {
@@ -21,6 +22,9 @@ function getMemoryUsagePercentage() {
   const memoryUsage = (usedMemory / totalMemory) * 100;
   return memoryUsage.toFixed(2);
 }
+
+getCpuUsagePercentage();
+getMemoryUsagePercentage();
 
 // This will periodically send metrics to Grafana
 const timer = setInterval(() => {
