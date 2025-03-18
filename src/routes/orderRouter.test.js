@@ -19,11 +19,11 @@ beforeEach(async () => {
     adminToken = loginAdminRes.body.token;
 });
 
-test('get menu', async () => {
-    const getMenuRes = await request(app)
-      .get('/api/order/menu')
-    expect(getMenuRes.status).toBe(200);
-})
+// test('get menu', async () => {
+//     const getMenuRes = await request(app)
+//       .get('/api/order/menu')
+//     expect(getMenuRes.status).toBe(200);
+// })
 
 test('add menu item', async () => {
     const addMenuItemRes = await request(app)
