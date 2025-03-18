@@ -5,7 +5,7 @@ const { asyncHandler } = require('../endpointHelper.js');
 const { DB, Role } = require('../database/database.js');
 
 const authRouter = express.Router();
-
+authRouter.use(metrics.track)
 authRouter.endpoints = [
   {
     method: 'POST',
