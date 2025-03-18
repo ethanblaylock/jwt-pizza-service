@@ -1,5 +1,5 @@
 const { get } = require('https');
-const config = require('./config.json');
+const config = require('./config.js');
 get();
 const requests = {};
 
