@@ -26,11 +26,11 @@ beforeEach(async () => {
 });
 
 
-// test('get franchises', async () => {
-//     const getFranchisesRes = await request(app)
-//       .get('/api/franchise')
-//     expect(getFranchisesRes.status).toBe(200);
-// })
+test('get franchises', async () => {
+    const getFranchisesRes = await request(app)
+      .get('/api/franchise')
+    expect(getFranchisesRes.status).toBe(200);
+})
 
 test('get franchises as admin', async () => {
     const getFranchisesRes = await request(app)

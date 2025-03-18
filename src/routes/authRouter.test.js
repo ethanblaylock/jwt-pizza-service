@@ -20,15 +20,15 @@ beforeEach(async () => {
   expectValidJwt(testUserAuthToken);
 });
 
-// test('login', async () => {
-//   const loginRes = await request(app).put('/api/auth').send(testUser);
-//   expect(loginRes.status).toBe(200);
-//   expectValidJwt(loginRes.body.token);
+test('login', async () => {
+  const loginRes = await request(app).put('/api/auth').send(testUser);
+  expect(loginRes.status).toBe(200);
+  expectValidJwt(loginRes.body.token);
 
-//   const expectedUser = { ...testUser, roles: [{ role: 'diner' }] };
-//   delete expectedUser.password;
-//   expect(loginRes.body.user).toMatchObject(expectedUser);
-// });
+  const expectedUser = { ...testUser, roles: [{ role: 'diner' }] };
+  delete expectedUser.password;
+  expect(loginRes.body.user).toMatchObject(expectedUser);
+});
 
 test('register', async () => {
     const registerRes = await request(app).post('/api/auth').send(testUser);
