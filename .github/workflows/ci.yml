@@ -46,9 +46,9 @@ jobs:
             jwtSecret: '${{ secrets.JWT_SECRET }}',
             db: {
               connection: {
-                host: '127.0.0.1',
-                user: 'root',
-                password: 'tempdbpassword',
+                host: '${{ secrets.DB_HOSTNAME }}',
+                user: '${{ secrets.DB_USERNAME }}',
+                password: '${{ secrets.DB_PASSWORD }}',
                 database: 'pizza',
                 connectTimeout: 60000,
               },
@@ -59,7 +59,7 @@ jobs:
               apiKey: '${{ secrets.FACTORY_API_KEY }}',
             },
             metrics: {
-              source: 'jwt-pizza-service',
+              source: 'jwt-pizza-service-test',
               host: '${{ secrets.METRICS_URL }}',
               apiKey: '${{ secrets.METRICS_API_KEY }}',
             }, 
