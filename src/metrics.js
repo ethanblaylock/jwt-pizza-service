@@ -1,5 +1,4 @@
 
-const { send } = require('process');
 const config = require('./config.js');
 
 const requests = {};
@@ -31,15 +30,8 @@ function track(req, res, next) {
 function loginEvent(userId, success) {
     // console.log(`loginEvent called - userId: ${userId}, success: ${success}`);
     
-    if (!authEvents.hasOwnProperty(success ? 'success' : 'failure')) {
-      console.error("Invalid success parameter in loginEvent");
-      return;
-    }
-  
     authEvents[success ? 'success' : 'failure'] += 1;
-  
     if (success) {
-    //   console.log(`Tracking active user: ${userId}`);
       activeUsers.set(userId, { login: Date.now(), last: Date.now() });
     }
   }
@@ -93,7 +85,7 @@ function sendMetricToGrafana(metricName, metricValue, attributes, units = 's') {
             metrics: [
               {
                 name: metricName,
-                // unit: units,
+                unit: units,
                 gauge: {
                   dataPoints: [
                     {
@@ -156,7 +148,7 @@ const timer = setInterval(async () => {
   sendMetricToGrafana('pizza_purchase_count', purchase.count, {}, '1');
   sendMetricToGrafana('pizza_purchase_latency', purchase.latency, {}, 'ms');
   sendMetricToGrafana('pizza_purchase_error', purchase.error, {}, '1');
-  sendMetricToGrafana('pizza_purchase_revenue', Math.round(purchase.revenue*1000), {}, '$');
+  sendMetricToGrafana('pizza_purchase_revenue', Math.round(purchase.revenue*1000), {}, '1');
 
   sendMetricToGrafana('pizza_request_latency', requestLatency, {}, 'ms');
 }, 10000);

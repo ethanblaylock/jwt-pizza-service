@@ -76,7 +76,7 @@ authRouter.post(
       const auth = await setAuth(user);
       res.json({ user: user, token: auth });
       metrics.loginEvent(user.id, true);
-    } catch (error) {
+    } catch {
       metrics.loginEvent(null, false);
       res.status(500).json({ message: 'error creating user' });
     }
@@ -93,7 +93,7 @@ authRouter.put(
       const auth = await setAuth(user);
       metrics.loginEvent(user.id, true);
       res.json({ user: user, token: auth });
-    } catch (error) {
+    } catch {
       metrics.loginEvent(null, false);
       res.status(401).json({ message: 'invalid email or password' });
     }
