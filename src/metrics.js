@@ -4,10 +4,9 @@ get();
 const requests = {};
 
 function track(req, res, next) {
-    return (req, res, next) => {
-        requests[endpoint] = (requests[endpoint] || 0) + 1;
-        next();
-    };
+  requests[req.method] = (requests[req.method] || 0) + 1;
+  res;
+  next();
 }
 
 const os = require('os');
