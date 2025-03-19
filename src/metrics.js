@@ -140,15 +140,15 @@ const timer = setInterval(async () => {
   sendMetricToGrafana('memory_usage', memoryUsage, {}, '%');
 
   const userCount = getCurrentUserCount();
-  sendMetricToGrafana('current_users', userCount, {}, '1');
+  sendMetricToGrafana('current_users', userCount, {}, 's');
 
-  sendMetricToGrafana('pizza_auth_success', authEvents.success, {}, '1');
-  sendMetricToGrafana('pizza_auth_failure', authEvents.failure, {}, '1');
+  sendMetricToGrafana('pizza_auth_success', authEvents.success, {}, 's');
+  sendMetricToGrafana('pizza_auth_failure', authEvents.failure, {}, 's');
 
-  sendMetricToGrafana('pizza_purchase_count', purchase.count, {}, '1');
+  sendMetricToGrafana('pizza_purchase_count', purchase.count, {}, 's');
   sendMetricToGrafana('pizza_purchase_latency', purchase.latency, {}, 'ms');
-  sendMetricToGrafana('pizza_purchase_error', purchase.error, {}, '1');
-  sendMetricToGrafana('pizza_purchase_revenue', Math.round(purchase.revenue*1000), {}, '1');
+  sendMetricToGrafana('pizza_purchase_error', purchase.error, {}, 's');
+  sendMetricToGrafana('pizza_purchase_revenue', Math.round(purchase.revenue*1000), {}, 's');
 
   sendMetricToGrafana('pizza_request_latency', requestLatency, {}, 'ms');
 }, 10000);
