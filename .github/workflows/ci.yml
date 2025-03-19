@@ -59,7 +59,7 @@ jobs:
               apiKey: '${{ secrets.FACTORY_API_KEY }}',
             },
             metrics: {
-              source: 'jwt-pizza-service-test',
+              source: 'jwt-pizza-service',
               host: '${{ secrets.METRICS_URL }}',
               apiKey: '${{ secrets.METRICS_API_KEY }}',
             }, 
