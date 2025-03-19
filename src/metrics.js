@@ -1,11 +1,10 @@
-const { get } = require('https');
+
 const config = require('./config.js');
-get();
+
 const requests = {};
 
 function track(req, res, next) {
   requests[req.method] = (requests[req.method] || 0) + 1;
-  res;
   next();
 }
 
@@ -37,7 +36,7 @@ const timer = setInterval(() => {
 timer.unref();
 
 function sendMetricToGrafana(metricName, metricValue, attributes) {
-  attributes = { ...attributes, source: config.source };
+  attributes = { ...attributes, source: config.metrics.source };
 
   const metric = {
     resourceMetrics: [
@@ -72,10 +71,10 @@ function sendMetricToGrafana(metricName, metricValue, attributes) {
     });
   });
 
-  fetch(`${config.host}`, {
+  fetch(`${config.metrics.host}`, {
     method: 'POST',
     body: JSON.stringify(metric),
-    headers: { Authorization: `Bearer ${config.apiKey}`, 'Content-Type': 'application/json' },
+    headers: { Authorization: `Bearer ${config.metrics.apiKey}`, 'Content-Type': 'application/json' },
   })
     .then((response) => {
       if (!response.ok) {

@@ -1,12 +1,10 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const config = require('../config.js');
-const metrics = require('../metrics.js');
 const { asyncHandler } = require('../endpointHelper.js');
 const { DB, Role } = require('../database/database.js');
 
 const authRouter = express.Router();
-authRouter.use(metrics.track)
 authRouter.endpoints = [
   {
     method: 'POST',
@@ -66,7 +64,7 @@ authRouter.authenticateToken = (req, res, next) => {
 
 // register
 authRouter.post(
-  '/', metrics.track,
+  '/',
   asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
@@ -80,7 +78,7 @@ authRouter.post(
 
 // login
 authRouter.put(
-  '/', metrics.track,
+  '/',
   asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     const user = await DB.getUser(email, password);
@@ -91,7 +89,7 @@ authRouter.put(
 
 // logout
 authRouter.delete(
-  '/', metrics.track,
+  '/', 
   authRouter.authenticateToken,
   asyncHandler(async (req, res) => {
     await clearAuth(req);
@@ -101,7 +99,7 @@ authRouter.delete(
 
 // updateUser
 authRouter.put(
-  '/:userId', metrics.track,
+  '/:userId', 
   authRouter.authenticateToken,
   asyncHandler(async (req, res) => {
     console.log(req.body);
