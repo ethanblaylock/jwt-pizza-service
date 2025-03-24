@@ -4,6 +4,7 @@ const { Role, DB } = require('../database/database.js');
 const { authRouter } = require('./authRouter.js');
 const { asyncHandler, StatusCodeError } = require('../endpointHelper.js');
 const metrics = require('../metrics');
+const logger = require('../logger');
 
 const orderRouter = express.Router();
 
@@ -88,8 +89,10 @@ orderRouter.post(
     });
     const j = await r.json();
     if (r.ok) {
+      logger.log('info', 'factory', { resBody: JSON.stringify(order), reportSlowPizzaToFactoryUrl: j.reportUrl, jwt: j.jwt });
       res.send({ order, reportSlowPizzaToFactoryUrl: j.reportUrl, jwt: j.jwt });
     } else {
+      logger.log('error', 'factory', { resBody: JSON.stringify(order), reportPizzaCreationErrorToPizzaFactoryUrl: j.reportUrl });
       res.status(500).send({ message: 'Failed to fulfill order at factory', reportPizzaCreationErrorToPizzaFactoryUrl: j.reportUrl });
       orderEvent.error = true;
     }
