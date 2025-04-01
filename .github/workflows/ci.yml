@@ -35,6 +35,7 @@ jobs:
           node-version: '20.x'
 
       - name: Install dependencies
+        run: npm config set registry https://registry.npmjs.org/
         run: npm ci
 
       - name: Lint
